@@ -1,4 +1,4 @@
-package android.util.tintableimageview;
+package util.android.tintableimageview;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

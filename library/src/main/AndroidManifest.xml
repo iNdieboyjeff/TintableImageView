@@ -1,4 +1,4 @@
-<manifest package="android.util.tintableimageview"
+<manifest package="util.android.tintableimageview"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
 

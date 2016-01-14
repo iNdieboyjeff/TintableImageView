@@ -29,6 +29,63 @@ android {
     }
 }
 
+def siteUrl = 'https://github.com/iNdieboyjeff/TintableImageView'      // Homepage URL of the library
+def gitUrl = 'https://github.com/iNdieboyjeff/TintableImageView.git'   // Git repository URL
+def issueUrl = 'https://github.com/iNdieboyjeff/TintableImageView/issues'
+
+
+
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    title = 'TextViews ' + version
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    exclude '**/BuildConfig.java'
+    options {
+        links "http://docs.oracle.com/javase/7/docs/api/"
+        linksOffline "http://d.android.com/reference","${android.sdkDirectory}/docs/reference"
+    }
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+afterEvaluate {
+    javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+}
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "tintableimageview"
+        websiteUrl = siteUrl
+        publicDownloadNumbers = true
+        vcsUrl = gitUrl
+        issueTrackerUrl = issueUrl
+        labels = ["Android", "ImageView", "Tint", "Widget"]
+        desc = "Custom ImageView component for Android."
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
