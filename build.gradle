@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
     }
 }
@@ -20,8 +20,4 @@ allprojects {
             url  "http://dl.bintray.com/indieboyjeff/maven"
         }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

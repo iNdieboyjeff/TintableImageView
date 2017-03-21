@@ -1,14 +1,38 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.8'
+    }
+
+}
+
 plugins {
     id "com.jfrog.bintray" version "1.4"
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 allprojects {
     group = 'util.android.tintableimageview'
     version = '1.0.1'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        url  "http://dl.bintray.com/indieboyjeff/maven"
+    }
+
 }
 
 android {
@@ -29,11 +53,15 @@ android {
     }
 }
 
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+}
+
 def siteUrl = 'https://github.com/iNdieboyjeff/TintableImageView'      // Homepage URL of the library
 def gitUrl = 'https://github.com/iNdieboyjeff/TintableImageView.git'   // Git repository URL
 def issueUrl = 'https://github.com/iNdieboyjeff/TintableImageView/issues'
-
-
 
 
 task sourcesJar(type: Jar) {
@@ -43,7 +71,7 @@ task sourcesJar(type: Jar) {
 
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
-    title = 'TextViews ' + version
+    title = 'TintableImageView ' + version
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     exclude '**/BuildConfig.java'
     options {
@@ -64,6 +92,7 @@ artifacts {
 afterEvaluate {
     javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
 }
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
