@@ -6,6 +6,16 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 
+/**
+ * An ImageView that supports tinting.
+ *
+ * It's possible that this is no longer needed as the AppCompatImageView now supports tints,
+ * but that's the way life is!
+ *
+ * The attribute for using this has been renamed from 'tint' to 'cTint' as there were conflicts
+ * with the AppCompatImageView attribute of the same name.
+ *
+ */
 public class TintableImageView extends android.support.v7.widget.AppCompatImageView {
 
     private ColorStateList tint;
@@ -21,7 +31,7 @@ public class TintableImageView extends android.support.v7.widget.AppCompatImageV
 
     private void init(Context context, AttributeSet attrs, int defStyle) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TintableImageView, defStyle, 0);
-        tint = a.getColorStateList(R.styleable.TintableImageView_tint);
+        tint = a.getColorStateList(R.styleable.TintableImageView_cTint);
         a.recycle();
     }
 
